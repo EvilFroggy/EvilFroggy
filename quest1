@@ -1,0 +1,26 @@
+#!/bin/bash
+function copycat {
+  for filename in *
+    do
+    if [ -f "$filename" ]
+    then
+      if [ -e ~/output_dir/"$filename" ]
+      then
+        mv ~/output_dir/"$filename" ~/output_dir/"exists_ $var1"
+        cp "$PWD"/"$filename" ~/output_dir
+        var1=$(( $var1 + 1 ))
+      else
+        cp "$PWD"/"$filename" ~/output_dir
+      fi
+    elif [ -d "$filename" ]
+    then
+      cd "$PWD"/"$filename"
+      copycat
+      cd ..
+    fi
+  done
+}
+
+var1=1
+cd ~/input_dir
+copycat
